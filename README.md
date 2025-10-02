@@ -1,3 +1,4 @@
+Just for the hype:
 ```
 kepler@youpi:~/zama/fhe-test1$ node-gyp configure build && node test.js
 gyp info it worked if it ends with ok
