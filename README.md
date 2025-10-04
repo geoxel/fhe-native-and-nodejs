@@ -1,41 +1,49 @@
-Just for the hype:
+Building a NodeJS native TFHE addon.
+
+## Setup
+
+Retrieving the TFHE repo and build it with the C API.
+```bash
+git clone https://github.com/zama-ai/tfhe-rs.git
+cd tfhe-rs
+RUSTFLAGS="-C target-cpu=native" cargo +nightly build --release --features=high-level-c-api -p tfhe
+ls -lF target/release
+cd ..
 ```
-kepler@youpi:~/zama/fhe-test1$ node-gyp configure build && node test.js
+Retrieve this repo and install the node-gyp and the node-addon-api module.
+```bash
+git clone https://github.com/geoxel/fhe-native-and-nodejs.git
+cd fhe-native-and-nodejs
+npm install -g node-gyp
+npm install node-addon-api
+```
+Configure and create the Makefile, etc:
+```bash
+node-gyp configure
+```
+## Build
+Build the NodeJS addon:
+```bash
+$ node-gyp build
 gyp info it worked if it ends with ok
 gyp info using node-gyp@11.4.2
 gyp info using node@22.20.0 | darwin | arm64
-gyp info find Python using Python version 3.9.6 found at "/Applications/Xcode.app/Contents/Developer/usr/bin/python3"
-
-gyp info spawn /Applications/Xcode.app/Contents/Developer/usr/bin/python3
-gyp info spawn args [
-gyp info spawn args '/Users/kepler/local/nodejs/lib/node_modules/node-gyp/gyp/gyp_main.py',
-gyp info spawn args 'binding.gyp',
-gyp info spawn args '-f',
-gyp info spawn args 'make',
-gyp info spawn args '-I',
-gyp info spawn args '/Users/kepler/zama/fhe-test1/build/config.gypi',
-gyp info spawn args '-I',
-gyp info spawn args '/Users/kepler/local/nodejs/lib/node_modules/node-gyp/addon.gypi',
-gyp info spawn args '-I',
-gyp info spawn args '/Users/kepler/Library/Caches/node-gyp/22.20.0/include/node/common.gypi',
-gyp info spawn args '-Dlibrary=shared_library',
-gyp info spawn args '-Dvisibility=default',
-gyp info spawn args '-Dnode_root_dir=/Users/kepler/Library/Caches/node-gyp/22.20.0',
-gyp info spawn args '-Dnode_gyp_dir=/Users/kepler/local/nodejs/lib/node_modules/node-gyp',
-gyp info spawn args '-Dnode_lib_file=/Users/kepler/Library/Caches/node-gyp/22.20.0/<(target_arch)/node.lib',
-gyp info spawn args '-Dmodule_root_dir=/Users/kepler/zama/fhe-test1',
-gyp info spawn args '-Dnode_engine=v8',
-gyp info spawn args '--depth=.',
-gyp info spawn args '--no-parallel',
-gyp info spawn args '--generator-output',
-gyp info spawn args 'build',
-gyp info spawn args '-Goutput_dir=.'
-gyp info spawn args ]
 gyp info spawn make
 gyp info spawn args [ 'BUILDTYPE=Release', '-C', 'build' ]
-make: Nothing to be done for `all'.
-gyp info ok 
+  CC(target) Release/obj.target/nothing/node_modules/node-addon-api/nothing.o
+  LIBTOOL-STATIC Release/nothing.a
+warning: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/libtool: archive library: Release/nothing.a the table of contents is empty (no object file members in the library define global symbols)
+  CXX(target) Release/obj.target/addon/fhe-test.o
+  CXX(target) Release/obj.target/addon/JSFheUInt8.o
+  SOLINK_MODULE(target) Release/addon.node
+gyp info ok
+```
+## Testing
+Run it:
+```
+$ node test.js
 generate_keys...
+My secret client key is:
 Uint8Array(23910) [
   0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0,
   1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0,
@@ -50,7 +58,6 @@ Uint8Array(23910) [
 ]
 Hey1 = 42
 Hey2 = 18
-Hadd = 60
-kepler@youpi:~/zama/fhe-test1$ 
+Hey1 + Hey2 = 60
 ```
-
+*What a time to be alive!*
