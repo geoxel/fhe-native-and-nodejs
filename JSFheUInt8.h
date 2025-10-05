@@ -23,7 +23,8 @@ public:
 
   JSFheUInt8(const Napi::CallbackInfo &info);
   virtual ~JSFheUInt8();
-  
+  void Destroy();
+
 private:
   FheUint8 *_fhe;
 };

@@ -1,29 +1,29 @@
-#include "JSFheUInt8.h"
+#include "JSFheUInt32.h"
 #include <napi.h>
 #include "tfhe.h"
 
-JSFheUInt8::JSFheUInt8(const Napi::CallbackInfo &info)
-    : Napi::ObjectWrap<JSFheUInt8>(info)
+JSFheUInt32::JSFheUInt32(const Napi::CallbackInfo &info)
+    : Napi::ObjectWrap<JSFheUInt32>(info)
 {
 }
 
-JSFheUInt8::~JSFheUInt8()
+JSFheUInt32::~JSFheUInt32()
 {
   Destroy();
 }
 
-void JSFheUInt8::Destroy()
+void JSFheUInt32::Destroy()
 {
   if (_fhe != nullptr)
   {
-    fhe_uint8_destroy(_fhe);
+    fhe_uint32_destroy(_fhe);
     _fhe = nullptr;
   }
 }
 
-void JSFheUInt8::Init(Napi::Env env, Napi::Object exports)
+void JSFheUInt32::Init(Napi::Env env, Napi::Object exports)
 {
-  Napi::Function func = DefineClass(env, "FheUInt8", {});
+  Napi::Function func = DefineClass(env, "FheUInt32", {});
 
   Napi::FunctionReference *constructor = new Napi::FunctionReference();
   *constructor = Napi::Persistent(func);
@@ -34,7 +34,7 @@ void JSFheUInt8::Init(Napi::Env env, Napi::Object exports)
   exports.Set("FheUInt8", func);
 }
 
-Napi::Object JSFheUInt8::NewInstance(Napi::Env env, Napi::Value arg)
+Napi::Object JSFheUInt32::NewInstance(Napi::Env env, Napi::Value arg)
 {
   Napi::Object obj = env.GetInstanceData<Napi::FunctionReference>()->New({arg});
   return obj;

@@ -2,7 +2,7 @@
   "targets": [
     {
       "target_name": "addon",
-      "sources": [ "fhe-test.cc", "JSFheUInt8.cc" ],
+      "sources": [ "fhe-test.cc", "JSFheUInt8.cc", "JSFheUInt32.cc" ],
       
       'cflags!': [ '-fno-exceptions' ],
       'cflags_cc!': [ '-fno-exceptions' ],
